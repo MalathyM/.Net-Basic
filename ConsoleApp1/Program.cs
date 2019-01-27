@@ -10,142 +10,70 @@ namespace ConsoleApp1
     {
         class Program
         {
+            // To compute the factorial
             public static int factorial(int n)
             {
-                int fact = 0;
-                if (n == 0)
+                int fact = 1;
+                for (int i = 1; i <= n; i++)
                 {
-                    fact = 1;
-                }
-                else if (n == 1)
-                {
-                    fact = 1;
-                }
-                else
-                {
-                    fact = 1;
-                    for (int i = 1; i <= n; i++)
-                    {
-                        fact = fact * i;
-                    }
+                    fact = fact * i;
                 }
 
                 return fact;
             }
-
+            //To compute the power of given numbers
             public static int exp(int n, int e)
             {
                 int pow = 1;
-                if (e == 0)
+                while (e > 0)
                 {
-                    return 1;
-                }
-                else if (e == 1)
-                {
-                    return n;
-                }
-                else
-                {
-
-                    while (e > 0)
-                    {
-                        pow = pow * n;
-
-                        e--;
-                    }
+                    pow = pow * n;
+                    e--;
                 }
 
                 return pow;
             }
-            // write your self-reflection here as a comment
+
+            public static bool isPrime(int n)
+            {
+                for (int i = 2; i < n; i++)
+                {
+                    //Any number divisible by number other than 1 and itself is not a prime number
+                    if (n % i == 0)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            
             public static void printPrimeNumbers(int x, int y)
             {
-                int Flag = 0;
+                //For example if x=15 and y=5; below code will execute
                 if (x > y)
                 {
                     while (x >= y)
                     {
-                        if ((x <= 0) | (y <= 0))
+                        if(isPrime(x))
                         {
-                            Console.WriteLine("Zero and negative integers are excluded");
-                        }
-                        else if ((x == 1) | (y == 1))
-                        {
-                            Console.WriteLine(" 1 is neither prime nor composite");
-                        }
-
-                        else if (x == 2)
-                        {
-                            Console.WriteLine(" " + x);
-                        }
-                        else if (x > 2)
-                        {
-                            for (int i = 2; i < x; i++)
-                            {
-                                if (x % i == 0)
-                                {
-                                    Flag = 0;
-                                    break;
-                                }
-                                else
-                                {
-                                    Flag = 1;
-                                }
-
-                            }
-
-                            if (Flag == 1)
-                            {
-                                Console.WriteLine(" " + x);
-                            }
-                        }
+                            Console.WriteLine(x);
+                        }    
                         x--;
                     }
-
                 }
+                //For example if x=5 and y=15; below code will execute
                 else
                 {
                     while (x <= y)
                     {
-                        if ((x <= 0) | (y <= 0))
+                        if(isPrime(x))
                         {
-                            Console.WriteLine("Zero and negative integers are excluded");
-                        }
-                        else if ((x == 1) | (y == 1))
-                        {
-                            Console.WriteLine(" 1 is neither prime nor composite");
-                        }
-
-                        else if (x == 2)
-                        {
-                            Console.WriteLine(" " + x);
-                        }
-                        else if (x > 2)
-                        {
-                            for (int i = 2; i < x; i++)
-                            {
-                                if (x % i == 0)
-                                {
-                                    Flag = 0;
-                                    break;
-                                }
-                                else
-                                {
-                                    Flag = 1;
-                                }
-
-                            }
-
-                            if (Flag == 1)
-                            {
-                                Console.WriteLine(" " + x);
-                            }
+                            Console.WriteLine(x);
                         }
                         x++;
                     }
                 }
-               
-                Console.ReadKey();
             }
 
             public static double getSeriesResult(int n)
@@ -155,12 +83,12 @@ namespace ConsoleApp1
                 float factDiv = 0;
                 for (int j = 1; j <= n; j++)
                 {
-                    if (j > 1)
-                    {
+                        //to find if number is even
                         if (j % 2 == 0)
                         {
                             fact = factorial(j);
                             factDiv = (float)fact / (j + 1);
+                        //for even numbers, the sign should be negative. Hence multiplied by -1
                             sum = sum + (factDiv * -1);
                         }
                         else
@@ -169,14 +97,9 @@ namespace ConsoleApp1
                             factDiv = (float)fact / (j + 1);
                             sum = sum + (factDiv);
                         }
-                    }
-                    else
-                    {
-                        fact = factorial(j);
-                        factDiv = (float)fact / (j + 1);
-                        sum = sum + (factDiv);
-                    }
+                    
                 }
+                //rounding off to three decimal places without using math.round()
                 string input_decimal_number = sum.ToString();
                 var values = input_decimal_number.ToString(CultureInfo.InvariantCulture).Split('.');
                 int firstValue = int.Parse(values[0]);
@@ -189,39 +112,31 @@ namespace ConsoleApp1
                     finalValue = finalValue + decimal_places[i];
                 }
                 double result = double.Parse(finalValue);
-                Console.WriteLine(result);
-
                 return result;
             }
 
-            public static List<long> decimalToBinary(long n)
+            public static long decimalToBinary(long n)
             {
                 long remainder;
-                //long quotient;
+                long sum = 0;
                 var mylist = new List<long>();
-                var mylist2 = new List<long>();
-                do
+
+                while (n != 0)
                 {
                     remainder = n % 2;
                     n = n / 2;
+                    //adding the values to a list
                     mylist.Add(remainder);
 
-                    //n = n/2;
-                    if (n == 0)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                } while (n > -1);
+                }
+                
+                foreach(long i in mylist)
+                {
+                    sum = sum*10 + i;
+                }
 
-
-
-                return mylist;
-
-
+                return sum;
+                
             }
 
             public static long binaryToDecimal(long n)
@@ -233,6 +148,11 @@ namespace ConsoleApp1
                 while (n > 0)
                 {
                     remainder = n % 10;
+                    if(remainder > 1)
+                    {
+                        //to check if the given number is binary; if not -1 is returned
+                        return -1;
+                    }
                     n = n / 10;
                     binaryList.Add(remainder);
                 }
@@ -294,6 +214,7 @@ namespace ConsoleApp1
                         continue;
                     }
                     else
+                        //adding unique values to the list
                         unique_list.Add(a[i]);
                 }
                
@@ -304,6 +225,7 @@ namespace ConsoleApp1
                 {
                     for (int j = 0; j < len ; j++)
                     {
+                        //comparing unique values between list and given array
                         if (unique_list[k] == a[j])
                         {
                             counter++;
@@ -321,120 +243,70 @@ namespace ConsoleApp1
 
             public static void Main()
             {
-                Console.WriteLine("The options are:\n" + "1. Print Prime numbers\n" + "2. Sum of the series\n" + "3. Decimal to Binary conversion\n"
-                    + "4. Binary to Deciaml conversion\n" + "5. Pattern printing\n" + "6. Frequency of number");
-
-                Console.WriteLine("Enter you option");
-                string input = Console.ReadLine();
-                int option = int.Parse(input);
-                switch (option)
-                {
-                    case 1:
-                        Console.WriteLine("This program prints the prime number between the given range");
-                        int a = 15, b = 5;
-                        printPrimeNumbers(a, b);
-                        Console.ReadKey(true);
-                        break;
-                    case 2:
-                        Console.WriteLine("This program prints the sum of the given series");
-                        int n1 = 5;
-                        double r1 = getSeriesResult(n1);
-                        Console.WriteLine("The sum of the series is: " + r1);
-                        Console.ReadKey(true);
-                        break;
-                    case 3:
-                        Console.WriteLine("This program converts the given decimal number to binary equivalent");
-                        Console.WriteLine("Enter the decimal number");
-                        var mylist1 = new List<long>();
-                        long dec;
-                        string div;
-                        do
-                        {
-                            div = Console.ReadLine();
-                            dec = long.Parse(div);
-
-                            if (dec < 0)
-                            {
-                                Console.WriteLine("enter a non negative decimal");
-                            }
-                            else
-                            {
-
-                                mylist1 = decimalToBinary(dec);
-                            }
-                        } while (dec < 0);
-                        int length = mylist1.Count;
-                        Console.WriteLine("Binary conversion of the decimal number is"); 
-                        for (int i = length - 1; i >= 0; i--)
-                        {
-                            Console.Write(mylist1[i]);
-                        }
-                        //Console.WriteLine("Binary conversion of the decimal number " + n2 + " is: " + r2);
-                        Console.ReadKey(true);
-                        break;
-                    case 4:
-                        Console.WriteLine("This program converts the given binary number to deciaml equivalent");
-                        int flag = 0;
-                        do
-                        {
-                            Console.WriteLine("Enter a binary number");
-                            string binary_number = Console.ReadLine();
-                            
-                            int string_length = binary_number.Length;
-                            int i = 0;
-                            for (i = 0; i < string_length ; i++)
-                            {
-                                
-                                if (binary_number[i].Equals('0'))
-                                {
-                                   
-                                    flag = 1;
-                                    continue;
-                                }
-                                else if (binary_number[i].Equals('1'))
-                                {
-                                    
-                                    flag = 1;
-                                    continue;
-                                }
-                                else
-                                {
-                                    
-                                    flag = 0;
-                                    break;
-                                }
-                            }
-                            if (flag == 1)
-                            {
-                                long number = long.Parse(binary_number);
-                                long result = binaryToDecimal(number);
-                                Console.WriteLine("Decimal conversion of the binary number " + number + " is: " + result);
-                                Console.ReadKey(true);
-                            }
-                            
-                        } while (flag == 0);
-                        break;
-                    case 5:
-                        Console.WriteLine("This program prints the pattern for the given input");
-                        int n4 = 15;
-                        printTriangle(n4);
-                        Console.ReadKey(true);
-                        break;
-                    case 6:
-                        Console.WriteLine("This program prints the frequency of occurence of given numbers");
-                        int[] arr = new int[] { 1, 2, 3, 2, 2, 1, 3, 2, 6 };
-                        ComputeFrequency(arr);
-                        Console.ReadKey(true);
-                        break;
-                    default:
-                        Console.WriteLine("Please enter option between 1 and 6");
-                        Console.ReadKey(true);
-                        break;
+                Console.WriteLine("This program prints the prime number between the given range");
+                int a = 15, b = 5;
+                if(a>0 || b>0) {
+                    Console.WriteLine("The prime numbers between " + a + " and " + b + " are:");
+                    printPrimeNumbers(a, b);
                 }
+                Console.WriteLine();
+                
+                Console.WriteLine("This program prints the sum of the given series");
+                int n1 = 5;
+                double r1 = getSeriesResult(n1);
+                Console.WriteLine("The sum of the series is: " + r1);
+                Console.WriteLine();
 
+                Console.WriteLine("This program converts the given decimal number to binary equivalent");
+                long dec = 15;
+                if (dec < 0)
+                {
+                    Console.WriteLine("enter a non negative decimal");
+                }
+                else
+                {
+                    long r2 = decimalToBinary(dec);
+                    Console.WriteLine("Binary conversion of the decimal number "+dec+" is: "+r2);
+                }
+                Console.WriteLine();
+
+                Console.WriteLine("This program converts the given binary number to decimal equivalent");
+                long number = 1101;
+                if (number >= 0)
+                {
+                    long result = binaryToDecimal(number);
+                    if (result == -1)
+                    {
+                        Console.WriteLine("Not a valid number");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Decimal conversion of the binary number " + number + " is: " + result);
+                    }
+                }
+                Console.WriteLine();
+
+                int n4 = 5;
+                Console.WriteLine("This program prints the pattern for " + n4 + " number");
+                printTriangle(n4);
+                Console.WriteLine();
+
+                Console.WriteLine("This program prints the frequency of occurence of given numbers");
+                int[] arr = new int[] { 1, 2, 3, 2, 2, 1, 3, 2};
+                ComputeFrequency(arr);
+                Console.WriteLine();
+
+                Console.ReadLine();
+
+                /*SELF REFLECTION
+                 * This program series helped me think logically and approach the problem in a programatic way.
+                 * It took around 12 hrs to complete the assignment. 
+                 * This helped me learn the basics of programming and helped me understand the usage of modules in 
+                 * a better way . 
+                 * */
 
             }
         }
-        }
     }
+}
 
